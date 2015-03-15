@@ -16,6 +16,8 @@
     <body>
         <div class="container">
             <h1>Carrito</h1>
+             <a href="productsController?accion=listarProductos" class="btn btn-success">ver productos</a>
+            <br><br>
             <div class="panel panel-default">
                 <div class="panel-heading">Lista de productos en el carrito</div>
                 <table class="table">
@@ -26,6 +28,7 @@
                             <th>id producto</th>
                             <th>Precio</th>
                             <th>Estado</th>
+                            <th>Total</th>
                             <th>Acción</th>
                         </tr>
                     </thead>
@@ -37,7 +40,8 @@
                                 <td><c:out value="${carrito.getId_product()}"/></td>
                                 <td><c:out value="${carrito.getPrice()}"/></td>
                                 <td><c:out value="${carrito.getStatus()}"/></td>
-                                <td><a href="cartsController?accion=editarCarrito&id_cart=<c:out value="${carrito.getId_cart()}"/>" class="btn btn-success">Ejecutar compra</a></td>
+                                <td><c:out value="${carrito.getTotal()}"/></td>
+                                <td><a href="cartsController?accion=editarCarrito&id_cart=<c:out value="${carrito.getId_cart()}&email=${email}"/>" class="btn btn-success">Ejecutar compra</a></td>
                             </tr>
                         </c:forEach> 
                     </tbody>

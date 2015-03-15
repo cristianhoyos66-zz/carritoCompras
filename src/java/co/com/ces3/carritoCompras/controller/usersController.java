@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
 /**
@@ -29,15 +30,17 @@ public class usersController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     protected void metPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         boolean flag = false;
         String email = request.getParameter("email");
         String pass = request.getParameter("pass");
         usersDAO dao = new usersDAO();
         flag = dao.consultarUsuario(email, pass);
-
         if (flag) {
+            session.setAttribute("email", email);
             request.getRequestDispatcher("menu.jsp").forward(request, response);
         } else {
             request.getRequestDispatcher("index.jsp").forward(request, response);

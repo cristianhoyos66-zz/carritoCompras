@@ -28,11 +28,11 @@ public class cartsDAO {
         con = c.getConnection();
     }
     
-    public List<carts> consultarProductos(){
+    public List<carts> consultarProductos(String email){
         List<carts> carts = new ArrayList<carts>();
         PreparedStatement preparedStatement;
         try {
-            preparedStatement = con.prepareStatement("SELECT * FROM carts");
+            preparedStatement = con.prepareStatement("SELECT * FROM carts WHERE user_email='"+email+"'");
             ResultSet rs = preparedStatement.executeQuery();
             
             while(rs.next()){
@@ -46,6 +46,7 @@ public class cartsDAO {
                 }else{
                    Carts.setStatus("Pendiente");
                 }
+                Carts.setTotal(rs.getInt("total"));
                 carts.add(Carts);
             }
         } catch (SQLException ex) {
@@ -64,6 +65,20 @@ public class cartsDAO {
         } catch (SQLException ex) {
             Logger.getLogger(cartsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }    
     
+    public void crearCarrito(carts cart) {
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = con.prepareStatement("INSERT INTO carts (user_email, id_product, price, status, total) values (?,?,?,?,?)");
+            preparedStatement.setString(1, cart.getUser_email());
+            preparedStatement.setInt(2, cart.getId_product());
+            preparedStatement.setInt(3, cart.getPrice());
+            preparedStatement.setBoolean(4, false);
+            preparedStatement.setInt(5, cart.getTotal());
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(cartsDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
