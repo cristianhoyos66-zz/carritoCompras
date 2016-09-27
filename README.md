@@ -1,2 +1,6 @@
 # carritoCompras
-carritoCompras con JSP
+
+Carrito de compras hecho con:
+
+  - Java
+  - MySQL
